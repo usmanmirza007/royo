@@ -49,10 +49,10 @@ override fun onDestroy() {
   super.onDestroy()
 }
 
-override fun onNewIntent(intent: Intent?) {
-  super.onNewIntent(intent)
-  activityProxy.onNewIntent(intent)
-}
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        activityProxy.onNewIntent(intent ?: Intent()) // Provide a default empty Intent
+    }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule

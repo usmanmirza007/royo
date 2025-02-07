@@ -79,7 +79,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
-    compileSdk rootProject.ext.compileSdkVersion
+    compileSdk 34
 
     namespace "com.royo"
     defaultConfig {
@@ -126,7 +126,7 @@ dependencies {
 
     implementation platform("com.google.firebase:firebase-bom:33.4.0") // Firebase BOM
     implementation "com.google.firebase:firebase-analytics" // Firebase Analytics
-
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation 'com.twilio:voice-android:5.7.2'
     
     

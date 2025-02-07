@@ -5,5 +5,5 @@ rootProject.name = 'Royo'
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
 
-include ':@twilio_voice-react-native-sdk'
-project(':@twilio_voice-react-native-sdk').projectDir = new File(rootProject.projectDir, '../node_modules/@twilio/voice-react-native-sdk/android')
+//include ':@twilio_voice-react-native-sdk'
+//project(':@twilio_voice-react-native-sdk').projectDir = new File(rootProject.projectDir, '../node_modules/@twilio/voice-react-native-sdk/android')

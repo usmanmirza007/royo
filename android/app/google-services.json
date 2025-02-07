@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "259463093106",
+    "project_id": "primecall-e75aa",
+    "storage_bucket": "primecall-e75aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259463093106:android:9e2dd444147e18888f1beb",
+        "android_client_info": {
+          "package_name": "com.royo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmlP9dxHg_w5NZ6Clpag1eMZT_iE4q0Sc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

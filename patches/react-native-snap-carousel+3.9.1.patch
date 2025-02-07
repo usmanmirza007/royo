@@ -1,0 +1,358 @@
+diff --git a/node_modules/react-native-snap-carousel/src/carousel/Carousel.js b/node_modules/react-native-snap-carousel/src/carousel/Carousel.js
+index dae71a3..e1318d5 100644
+--- a/node_modules/react-native-snap-carousel/src/carousel/Carousel.js
++++ b/node_modules/react-native-snap-carousel/src/carousel/Carousel.js
+@@ -43,8 +43,8 @@ export default class Carousel extends Component {
+         autoplayDelay: PropTypes.number,
+         autoplayInterval: PropTypes.number,
+         callbackOffsetMargin: PropTypes.number,
+-        containerCustomStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
+-        contentContainerCustomStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        containerCustomStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]), // Updated
++        contentContainerCustomStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]), // Updated
+         enableMomentum: PropTypes.bool,
+         enableSnap: PropTypes.bool,
+         firstItem: PropTypes.number,
+@@ -61,7 +61,7 @@ export default class Carousel extends Component {
+         scrollEnabled: PropTypes.bool,
+         scrollInterpolator: PropTypes.func,
+         slideInterpolatedStyle: PropTypes.func,
+-        slideStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        slideStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]), // Updated
+         shouldOptimizeUpdates: PropTypes.bool,
+         swipeThreshold: PropTypes.number,
+         useScrollView: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+diff --git a/node_modules/react-native-snap-carousel/src/pagination/Pagination.js b/node_modules/react-native-snap-carousel/src/pagination/Pagination.js
+index 5c021cf..5d61f38 100644
+--- a/node_modules/react-native-snap-carousel/src/pagination/Pagination.js
++++ b/node_modules/react-native-snap-carousel/src/pagination/Pagination.js
+@@ -1,5 +1,5 @@
+ import React, { PureComponent } from 'react';
+-import { I18nManager, Platform, View, ViewPropTypes } from 'react-native';
++import { I18nManager, Platform, View, ViewStyle } from 'react-native';
+ import PropTypes from 'prop-types';
+ import PaginationDot from './PaginationDot';
+ import styles from './Pagination.style';
+@@ -14,16 +14,16 @@ export default class Pagination extends PureComponent {
+         dotsLength: PropTypes.number.isRequired,
+         activeOpacity: PropTypes.number,
+         carouselRef: PropTypes.object,
+-        containerStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        containerStyle: ViewStyle,
+         dotColor: PropTypes.string,
+-        dotContainerStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        dotContainerStyle: ViewStyle,
+         dotElement: PropTypes.element,
+-        dotStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        dotStyle: ViewStyle,
+         inactiveDotColor: PropTypes.string,
+         inactiveDotElement: PropTypes.element,
+         inactiveDotOpacity: PropTypes.number,
+         inactiveDotScale: PropTypes.number,
+-        inactiveDotStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        inactiveDotStyle: ViewStyle,
+         renderDots: PropTypes.func,
+         tappableDots: PropTypes.bool,
+         vertical: PropTypes.bool,
+@@ -45,41 +45,41 @@ export default class Pagination extends PureComponent {
+         delayPressInDot: 0,
+     }
+ 
+-    constructor (props) {
++    constructor(props) {
+         super(props);
+ 
+         // Warnings
+         if ((props.dotColor && !props.inactiveDotColor) || (!props.dotColor && props.inactiveDotColor)) {
+             console.warn(
+                 'react-native-snap-carousel | Pagination: ' +
+-                'You need to specify both `dotColor` and `inactiveDotColor`'
++                'You need to specify both dotColor and inactiveDotColor'
+             );
+         }
+         if ((props.dotElement && !props.inactiveDotElement) || (!props.dotElement && props.inactiveDotElement)) {
+             console.warn(
+                 'react-native-snap-carousel | Pagination: ' +
+-                'You need to specify both `dotElement` and `inactiveDotElement`'
++                'You need to specify both dotElement and inactiveDotElement'
+             );
+         }
+         if (props.tappableDots && props.carouselRef === undefined) {
+             console.warn(
+                 'react-native-snap-carousel | Pagination: ' +
+-                'You must specify prop `carouselRef` when setting `tappableDots` to `true`'
++                'You must specify prop carouselRef when setting tappableDots to true'
+             );
+         }
+     }
+ 
+-    _needsRTLAdaptations () {
++    _needsRTLAdaptations() {
+         const { vertical } = this.props;
+         return IS_RTL && !IS_IOS && !vertical;
+     }
+ 
+-    get _activeDotIndex () {
++    get _activeDotIndex() {
+         const { activeDotIndex, dotsLength } = this.props;
+         return this._needsRTLAdaptations() ? dotsLength - activeDotIndex - 1 : activeDotIndex;
+     }
+ 
+-    get dots () {
++    get dots() {
+         const {
+             activeOpacity,
+             carouselRef,
+@@ -106,20 +106,20 @@ export default class Pagination extends PureComponent {
+         }
+ 
+         const DefaultDot = <PaginationDot
+-          carouselRef={carouselRef}
+-          tappable={tappableDots && typeof carouselRef !== 'undefined'}
+-          activeOpacity={activeOpacity}
+-          color={dotColor}
+-          containerStyle={dotContainerStyle}
+-          style={dotStyle}
+-          inactiveColor={inactiveDotColor}
+-          inactiveOpacity={inactiveDotOpacity}
+-          inactiveScale={inactiveDotScale}
+-          inactiveStyle={inactiveDotStyle}
+-          animatedDuration={animatedDuration}
+-          animatedFriction={animatedFriction}
+-          animatedTension={animatedTension}
+-          delayPressInDot={delayPressInDot}
++            carouselRef={carouselRef}
++            tappable={tappableDots && typeof carouselRef !== 'undefined'}
++            activeOpacity={activeOpacity}
++            color={dotColor}
++            containerStyle={dotContainerStyle}
++            style={dotStyle}
++            inactiveColor={inactiveDotColor}
++            inactiveOpacity={inactiveDotOpacity}
++            inactiveScale={inactiveDotScale}
++            inactiveStyle={inactiveDotStyle}
++            animatedDuration={animatedDuration}
++            animatedFriction={animatedFriction}
++            animatedTension={animatedTension}
++            delayPressInDot={delayPressInDot}
+         />;
+ 
+         const dots = [...Array(dotsLength).keys()].map(i => {
+@@ -137,7 +137,7 @@ export default class Pagination extends PureComponent {
+         return dots;
+     }
+ 
+-    render () {
++    render() {
+         const { dotsLength, containerStyle, vertical, accessibilityLabel } = this.props;
+ 
+         if (!dotsLength || dotsLength < 2) {
+@@ -146,21 +146,22 @@ export default class Pagination extends PureComponent {
+ 
+         const style = [
+             styles.sliderPagination,
+-            { flexDirection: vertical ?
+-                'column' :
+-                (this._needsRTLAdaptations() ? 'row-reverse' : 'row')
++            {
++                flexDirection: vertical ?
++                    'column' :
++                    (this._needsRTLAdaptations() ? 'row-reverse' : 'row')
+             },
+             containerStyle || {}
+         ];
+ 
+         return (
+             <View
+-              pointerEvents={'box-none'}
+-              style={style}
+-              accessible={!!accessibilityLabel}
+-              accessibilityLabel={accessibilityLabel}
++                pointerEvents={'box-none'}
++                style={style}
++                accessible={!!accessibilityLabel}
++                accessibilityLabel={accessibilityLabel}
+             >
+-                { this.dots }
++                {this.dots}
+             </View>
+         );
+     }
+diff --git a/node_modules/react-native-snap-carousel/src/pagination/PaginationDot.js b/node_modules/react-native-snap-carousel/src/pagination/PaginationDot.js
+index e59d196..cc2e551 100644
+--- a/node_modules/react-native-snap-carousel/src/pagination/PaginationDot.js
++++ b/node_modules/react-native-snap-carousel/src/pagination/PaginationDot.js
+@@ -1,5 +1,5 @@
+ import React, { PureComponent } from 'react';
+-import { View, Animated, Easing, TouchableOpacity, ViewPropTypes } from 'react-native';
++import { View, Animated, Easing, TouchableOpacity, ViewStyle } from 'react-native';
+ import PropTypes from 'prop-types';
+ import styles from './Pagination.style';
+ 
+@@ -12,11 +12,11 @@ export default class PaginationDot extends PureComponent {
+         activeOpacity: PropTypes.number,
+         carouselRef: PropTypes.object,
+         color: PropTypes.string,
+-        containerStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        containerStyle: ViewStyle,
+         inactiveColor: PropTypes.string,
+-        inactiveStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        inactiveStyle: ViewStyle,
+         index: PropTypes.number,
+-        style: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        style: ViewStyle,
+         tappable: PropTypes.bool
+     };
+ 
+@@ -136,7 +136,7 @@ export default class PaginationDot extends PureComponent {
+             } catch (error) {
+                 console.warn(
+                     'react-native-snap-carousel | Pagination: ' +
+-                    '`carouselRef` has to be a Carousel ref.\n' + error
++                    'carouselRef has to be a Carousel ref.\n' + error
+                 );
+             }
+         } : undefined;
+diff --git a/node_modules/react-native-snap-carousel/src/parallaximage/ParallaxImage.js b/node_modules/react-native-snap-carousel/src/parallaximage/ParallaxImage.js
+index 8bc774a..bc59bfa 100644
+--- a/node_modules/react-native-snap-carousel/src/parallaximage/ParallaxImage.js
++++ b/node_modules/react-native-snap-carousel/src/parallaximage/ParallaxImage.js
+@@ -1,7 +1,7 @@
+ // Parallax effect inspired by https://github.com/oblador/react-native-parallax/
+ 
+ import React, { Component } from 'react';
+-import { View, ViewPropTypes, Image, Animated, Easing, ActivityIndicator, findNodeHandle } from 'react-native';
++import { View, ViewStyle, Image, Animated, Easing, ActivityIndicator, findNodeHandle } from 'react-native';
+ import PropTypes from 'prop-types';
+ import styles from './ParallaxImage.style';
+ 
+@@ -16,7 +16,7 @@ export default class ParallaxImage extends Component {
+         sliderHeight: PropTypes.number, // passed from <Carousel />
+         sliderWidth: PropTypes.number, // passed from <Carousel />
+         vertical: PropTypes.bool, // passed from <Carousel />
+-        containerStyle: ViewPropTypes ? ViewPropTypes.style : View.propTypes.style,
++        containerStyle: ViewStyle,
+         dimensions: PropTypes.shape({
+             width: PropTypes.number,
+             height: PropTypes.number
+@@ -40,7 +40,7 @@ export default class ParallaxImage extends Component {
+         AnimatedImageComponent: Animated.Image
+     }
+ 
+-    constructor (props) {
++    constructor(props) {
+         super(props);
+         this.state = {
+             offset: 0,
+@@ -54,11 +54,11 @@ export default class ParallaxImage extends Component {
+         this._measureLayout = this._measureLayout.bind(this);
+     }
+ 
+-    setNativeProps (nativeProps) {
++    setNativeProps(nativeProps) {
+         this._container.setNativeProps(nativeProps);
+     }
+ 
+-    componentDidMount () {
++    componentDidMount() {
+         this._mounted = true;
+ 
+         setTimeout(() => {
+@@ -66,11 +66,11 @@ export default class ParallaxImage extends Component {
+         }, 0);
+     }
+ 
+-    componentWillUnmount () {
++    componentWillUnmount() {
+         this._mounted = false;
+     }
+ 
+-    _measureLayout () {
++    _measureLayout() {
+         if (this._container) {
+             const {
+                 dimensions,
+@@ -105,7 +105,7 @@ export default class ParallaxImage extends Component {
+         }
+     }
+ 
+-    _onLoad (event) {
++    _onLoad(event) {
+         const { animOpacity } = this.state;
+         const { fadeDuration, onLoad } = this.props;
+ 
+@@ -131,7 +131,7 @@ export default class ParallaxImage extends Component {
+     }
+ 
+     // If arg is missing from method signature, it just won't be called
+-    _onError (event) {
++    _onError(event) {
+         const { onError } = this.props;
+ 
+         this.setState({ status: 4 });
+@@ -141,7 +141,7 @@ export default class ParallaxImage extends Component {
+         }
+     }
+ 
+-    get image () {
++    get image() {
+         const { status, animOpacity, offset, width, height } = this.state;
+         const {
+             scrollPosition,
+@@ -181,41 +181,41 @@ export default class ParallaxImage extends Component {
+ 
+         return (
+             <AnimatedImageComponent
+-              {...other}
+-              style={[styles.image, style, requiredStyles, dynamicStyles]}
+-              onLoad={this._onLoad}
+-              onError={status !== 3 ? this._onError : undefined} // prevent infinite-loop bug
++                {...other}
++                style={[styles.image, style, requiredStyles, dynamicStyles]}
++                onLoad={this._onLoad}
++                onError={status !== 3 ? this._onError : undefined} // prevent infinite-loop bug
+             />
+         );
+     }
+ 
+-    get spinner () {
++    get spinner() {
+         const { status } = this.state;
+         const { showSpinner, spinnerColor } = this.props;
+ 
+         return status === 1 && showSpinner ? (
+             <View style={styles.loaderContainer}>
+                 <ActivityIndicator
+-                  size={'small'}
+-                  color={spinnerColor}
+-                  animating={true}
++                    size={'small'}
++                    color={spinnerColor}
++                    animating={true}
+                 />
+             </View>
+         ) : false;
+     }
+ 
+-    render () {
++    render() {
+         const { containerStyle } = this.props;
+ 
+         return (
+             <View
+-              ref={(c) => { this._container = c; }}
+-              pointerEvents={'none'}
+-              style={[containerStyle, styles.container]}
+-              onLayout={this._measureLayout}
++                ref={(c) => { this._container = c; }}
++                pointerEvents={'none'}
++                style={[containerStyle, styles.container]}
++                onLayout={this._measureLayout}
+             >
+-                { this.image }
+-                { this.spinner }
++                {this.image}
++                {this.spinner}
+             </View>
+         );
+     }

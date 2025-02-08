@@ -1,6 +1,6 @@
 // export const baseUrl = 'http://192.168.137.1:8000';
 export const baseUrl =
-  'https://0974-39-58-157-62.ngrok-free.app';
+  'https://294b-113-203-199-91.ngrok-free.app';
 
 // export const baseUrl = 'https://cultivatepie.com/api'; // server
 
